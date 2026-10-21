@@ -1,56 +1,64 @@
-# Welcome to your Expo app 👋
+# Physio360 mobile (staff app)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+React Native app (Expo SDK 58, Expo Router) for clinic staff. One app for every
+role; the screens a person sees follow the role the clinic gave them in the web
+portal (owner, administrator, physiotherapist, front desk, accountant).
 
-## Get started
+## What it does
 
-1. Install dependencies
+| Area | Owner / admin | Physiotherapist | Front desk | Accountant |
+|---|---|---|---|---|
+| Home dashboard (role-aware KPIs, today's schedule, alerts) | ✓ business view | ✓ my day | ✓ queue | ✓ finance |
+| Geofenced clock in / out, attendance history | ✓ | ✓ | ✓ | ✓ |
+| Leave: balances, apply, cancel; approve / reject team requests | ✓ approve | ✓ | ✓ | ✓ |
+| Payslips (PDF) | ✓ | ✓ | ✓ | ✓ |
+| Schedule (day strip, mine / all), appointment status flow | ✓ | ✓ | ✓ | view |
+| Book appointments against real free slots | ✓ | ✓ | ✓ | — |
+| Patients: search, register, profile, call / WhatsApp | ✓ | ✓ | ✓ | view |
+| Patient photo (camera / gallery) and attachments (camera, gallery, PDF) | ✓ | ✓ | ✓ | — |
+| SOAP treatment notes with pain score, sign | — | ✓ | — | — |
+| Online booking inbox (confirm / decline + WhatsApp reply) | ✓ | ✓ | ✓ | — |
+| Billing: outstanding invoices, record payment, share invoice PDF | ✓ | — | ✓ | ✓ |
+| Team directory: who is in, performance, reset password | ✓ | — | — | — |
+| Face ID / fingerprint app lock, change password, first-login password | ✓ | ✓ | ✓ | ✓ |
 
-   ```bash
-   npm install
-   ```
+Security: the app signs in with `POST /api/auth/token` and stores a Sanctum
+bearer token in the device keychain / keystore (expo-secure-store). Signing out
+revokes the token; an administrator can sign a person out of every device from
+the web portal. Every endpoint is authorised on the server; the app only hides
+what a role cannot use.
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Run it
 
 ```bash
-npm run reset-project
+npm install
+npx expo start            # scan the QR code with Expo Go, or press a / i / w
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+* **Server address**: tap "Clinic server" on the sign-in screen. On a phone use
+  your computer's LAN address and start Laravel on all interfaces:
+  `php artisan serve --host=0.0.0.0 --port=8000`, then enter
+  `http://192.168.x.x:8000`. The Android emulator reaches the host at
+  `http://10.0.2.2:8000`. The default comes from `app.json` → `extra.apiUrl`.
+* Demo logins (password `Physio@2026`): `sarah@physio360.test` (owner),
+  `arjun@physio360.test` (physiotherapist), `reena@physio360.test` (front desk),
+  `joseph@physio360.test` (accountant), `kiran@physio360.test` (admin).
+* Geofenced clock-in is off in the demo. Turn it on in the web portal
+  (Settings → Attendance & leave) and pin each branch's location
+  (Settings → Branches → "Use my current location").
 
-### Other setup steps
+## Build for the stores
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```bash
+npx eas-cli@latest build --profile preview --platform android   # installable APK
+npx eas-cli@latest build --profile production --platform all     # store builds
+```
 
-## Learn more
+Face ID needs a development or store build (it is not available in Expo Go).
 
-To learn more about developing your project with Expo, look at the following resources:
+## Checks
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npx tsc --noEmit
+npx expo lint
+```
