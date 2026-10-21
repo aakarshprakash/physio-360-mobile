@@ -9,6 +9,7 @@ import { Avatar, Card, Empty, Row, Screen, SectionTitle, Stat, T, type IconName 
 import { api } from '@/lib/api';
 import { useSession } from '@/lib/auth';
 import { dayLabel, greeting, money, moneyCompact, ROLE_LABELS, todayIn } from '@/lib/format';
+import { useLightStatusBar } from '@/lib/statusBar';
 import { colors, radius } from '@/lib/theme';
 import type { Appointment, LeaveRequest, OnlineBooking } from '@/lib/types';
 
@@ -27,6 +28,7 @@ export default function HomeScreen() {
   const s = useSession();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  useLightStatusBar();
   const tz = s.tenant.timezone;
   const manager = s.can('staff.manage');
   const finance = s.can('billing.view');
@@ -66,6 +68,7 @@ export default function HomeScreen() {
   ];
 
   return (
+    <View style={{ flex: 1, backgroundColor: colors.bg }}>
     <Screen padded={false} refreshing={dash.isRefetching} onRefresh={refresh}>
       <View style={{ backgroundColor: colors.ink, paddingTop: insets.top + 16, paddingHorizontal: 20, paddingBottom: 56, borderBottomLeftRadius: 28, borderBottomRightRadius: 28 }}>
         <Row style={{ justifyContent: 'space-between' }}>
@@ -130,6 +133,8 @@ export default function HomeScreen() {
         )}
       </View>
     </Screen>
+    <View pointerEvents="none" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: insets.top, backgroundColor: colors.ink }} />
+    </View>
   );
 }
 

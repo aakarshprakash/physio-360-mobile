@@ -5,7 +5,7 @@ import { Alert, View } from 'react-native';
 import { Avatar, Badge, Button, Card, Empty, Loading, Row, Screen, Segmented, T } from '@/components/ui';
 import { api, errorText } from '@/lib/api';
 import { useSession } from '@/lib/auth';
-import { dateLabel } from '@/lib/format';
+import { dateLabel, label } from '@/lib/format';
 import { LEAVE_TONES } from '@/lib/hr';
 import type { LeaveRequest } from '@/lib/types';
 
@@ -50,7 +50,7 @@ export default function LeaveScreen() {
                   </T>
                 </View>
               </Row>
-              <Badge label={l.status} tone={LEAVE_TONES[l.status]} />
+              <Badge label={label(l.status)} tone={LEAVE_TONES[l.status]} />
             </Row>
             <T kind="label">{l.start_date === l.end_date ? dateLabel(l.start_date) : `${dateLabel(l.start_date)} → ${dateLabel(l.end_date)}`}</T>
             {l.reason ? <T kind="muted">“{l.reason}”</T> : null}

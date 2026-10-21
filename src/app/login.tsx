@@ -6,11 +6,13 @@ import { Banner, Button, Field, Input, Row, T } from '@/components/ui';
 import { ApiError, currentServer, defaultServer, errorText } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
 import { KEYS, storage } from '@/lib/storage';
+import { useLightStatusBar } from '@/lib/statusBar';
 import { colors, radius } from '@/lib/theme';
 
 export default function LoginScreen() {
   const { signIn } = useAuth();
   const insets = useSafeAreaInsets();
+  useLightStatusBar();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [server, setServerText] = useState(currentServer() || defaultServer());
@@ -38,7 +40,7 @@ export default function LoginScreen() {
 
   return (
     <KeyboardAvoidingView style={{ flex: 1, backgroundColor: colors.ink }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingTop: insets.top + 40, paddingBottom: insets.bottom + 24 }} keyboardShouldPersistTaps="handled">
+      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingTop: insets.top + 40 }} keyboardShouldPersistTaps="handled">
         <View style={{ paddingHorizontal: 28, gap: 6, marginBottom: 28 }}>
           <Row gap={10}>
             <View style={{ width: 46, height: 46, borderRadius: 14, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center' }}>
@@ -53,14 +55,14 @@ export default function LoginScreen() {
           <T kind="muted" style={{ color: '#B9CCC6' }}>Sign in with the account your clinic created for you. What you see depends on your role.</T>
         </View>
 
-        <View style={{ flex: 1, backgroundColor: colors.bg, borderTopLeftRadius: 28, borderTopRightRadius: 28, padding: 24, gap: 16 }}>
+        <View style={{ flex: 1, backgroundColor: colors.bg, borderTopLeftRadius: 28, borderTopRightRadius: 28, padding: 24, paddingBottom: insets.bottom + 24, gap: 16 }}>
           {error && <Banner tone="danger" body={error} />}
           <Field label="Work email">
             <Input value={email} onChangeText={setEmail} autoCapitalize="none" autoCorrect={false} keyboardType="email-address" textContentType="username" autoComplete="email" placeholder="you@clinic.com" accessibilityLabel="Work email" />
           </Field>
           <Field label="Password">
             <View>
-              <Input value={password} onChangeText={setPassword} secureTextEntry={!showPassword} textContentType="password" autoComplete="password" placeholder="••••••••" onSubmitEditing={submit} returnKeyType="go" accessibilityLabel="Password" style={{ paddingRight: 48 }} />
+              <Input value={password} onChangeText={setPassword} secureTextEntry={!showPassword} textContentType="password" autoComplete="password" placeholder="Enter your password" onSubmitEditing={submit} returnKeyType="go" accessibilityLabel="Password" style={{ paddingRight: 48 }} />
               <Pressable onPress={() => setShowPassword((v) => !v)} style={{ position: 'absolute', right: 12, top: 12 }} accessibilityLabel={showPassword ? 'Hide password' : 'Show password'} hitSlop={8}>
                 <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={22} color={colors.muted} />
               </Pressable>

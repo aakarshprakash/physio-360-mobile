@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { setStatusBarStyle } from 'expo-status-bar';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { AppState, Platform, View } from 'react-native';
@@ -50,6 +51,10 @@ export function BiometricGate({ active, children }: { active: boolean; children:
     });
     return () => sub.remove();
   }, [enabled, unlock]);
+
+  useEffect(() => {
+    if (active && locked) setStatusBarStyle('light', true);
+  }, [active, locked]);
 
   if (!active || !locked) return <>{children}</>;
 

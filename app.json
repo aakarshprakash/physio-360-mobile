@@ -1,70 +1,97 @@
 {
-  "expo": {
-    "name": "Physio360",
-    "slug": "physio360",
-    "version": "1.0.0",
-    "orientation": "default",
-    "icon": "./assets/images/icon.png",
-    "scheme": "physio360",
-    "userInterfaceStyle": "light",
-    "description": "Physio360 clinic app for physiotherapy teams: schedule, patients, attendance, leave and billing.",
-    "ios": {
-      "bundleIdentifier": "com.sysnac.physio360",
-      "supportsTablet": true,
-      "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Physio360 checks that you are at your clinic when you clock in or out.",
-        "NSCameraUsageDescription": "Take patient photos and photograph reports to attach to the patient record.",
-        "NSPhotoLibraryUsageDescription": "Attach photos of reports and scans to the patient record.",
-        "NSFaceIDUsageDescription": "Unlock Physio360 with Face ID."
-      }
-    },
-    "android": {
-      "package": "com.sysnac.physio360",
-      "adaptiveIcon": {
-        "backgroundColor": "#142D36",
-        "foregroundImage": "./assets/images/adaptive-icon.png"
-      },
-      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION", "CAMERA", "USE_BIOMETRIC", "USE_FINGERPRINT"],
-      "predictiveBackGestureEnabled": false
-    },
-    "web": {
-      "output": "single",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "backgroundColor": "#142D36",
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 120
+    "expo": {
+        "name": "Physio360",
+        "slug": "physio360",
+        "version": "1.0.0",
+        "orientation": "default",
+        "icon": "./assets/images/icon.png",
+        "scheme": "physio360",
+        "userInterfaceStyle": "light",
+        "description": "Physio360 clinic app for physiotherapy teams: schedule, patients, attendance, leave and billing.",
+        "ios": {
+            "bundleIdentifier": "com.sysnac.physio360",
+            "supportsTablet": true,
+            "infoPlist": {
+                "NSLocationWhenInUseUsageDescription": "Physio360 checks that you are at your clinic when you clock in or out.",
+                "NSCameraUsageDescription": "Take patient photos and photograph reports to attach to the patient record.",
+                "NSPhotoLibraryUsageDescription": "Attach photos of reports and scans to the patient record.",
+                "NSFaceIDUsageDescription": "Unlock Physio360 with Face ID."
+            }
+        },
+        "android": {
+            "package": "com.sysnac.physio360",
+            "adaptiveIcon": {
+                "backgroundColor": "#142D36",
+                "foregroundImage": "./assets/images/adaptive-icon.png"
+            },
+            "permissions": [
+                "ACCESS_FINE_LOCATION",
+                "ACCESS_COARSE_LOCATION",
+                "CAMERA",
+                "USE_BIOMETRIC",
+                "USE_FINGERPRINT"
+            ],
+            "predictiveBackGestureEnabled": false,
+            "versionCode": 1,
+            "softwareKeyboardLayoutMode": "resize",
+            "blockedPermissions": [
+                "android.permission.ACCESS_BACKGROUND_LOCATION",
+                "android.permission.RECORD_AUDIO"
+            ],
+            "allowBackup": false
+        },
+        "web": {
+            "output": "single",
+            "favicon": "./assets/images/favicon.png"
+        },
+        "plugins": [
+            "expo-router",
+            [
+                "expo-splash-screen",
+                {
+                    "backgroundColor": "#142D36",
+                    "image": "./assets/images/splash-icon.png",
+                    "imageWidth": 120
+                }
+            ],
+            "expo-secure-store",
+            "expo-sharing",
+            [
+                "expo-location",
+                {
+                    "locationWhenInUsePermission": "Physio360 checks that you are at your clinic when you clock in or out."
+                }
+            ],
+            [
+                "expo-image-picker",
+                {
+                    "photosPermission": "Attach photos of reports and scans to the patient record.",
+                    "cameraPermission": "Take patient photos and photograph reports to attach to the patient record."
+                }
+            ],
+            [
+                "expo-local-authentication",
+                {
+                    "faceIDPermission": "Unlock Physio360 with Face ID."
+                }
+            ],
+            [
+                "expo-build-properties",
+                {
+                    "android": {
+                        "usesCleartextTraffic": true
+                    }
+                }
+            ],
+            "./plugins/withReleaseSigning",
+            "./plugins/withShortCmakeObjectPaths"
+        ],
+        "extra": {
+            "apiUrl": "http://localhost:8000"
+        },
+        "experiments": {
+            "typedRoutes": true,
+            "reactCompiler": true
         }
-      ],
-      "expo-secure-store",
-      "expo-sharing",
-      [
-        "expo-location",
-        { "locationWhenInUsePermission": "Physio360 checks that you are at your clinic when you clock in or out." }
-      ],
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "Attach photos of reports and scans to the patient record.",
-          "cameraPermission": "Take patient photos and photograph reports to attach to the patient record."
-        }
-      ],
-      [
-        "expo-local-authentication",
-        { "faceIDPermission": "Unlock Physio360 with Face ID." }
-      ]
-    ],
-    "extra": {
-      "apiUrl": "http://localhost:8000"
-    },
-    "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
     }
-  }
 }

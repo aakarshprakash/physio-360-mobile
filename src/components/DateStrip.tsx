@@ -10,7 +10,7 @@ export function DateStrip({ value, onChange, today, back = 3, ahead = 21 }: { va
       {days.map((d) => {
         const active = d === value;
         return (
-          <Pressable key={d} onPress={() => onChange(d)} accessibilityRole="button" accessibilityState={{ selected: active }} accessibilityLabel={d}
+          <Pressable key={d} onPress={() => onChange(d)} accessibilityRole="button" accessibilityState={{ selected: active }} accessibilityLabel={d === today ? `Today, ${dayNumber(d)} ${monthShort(d)}` : `${weekdayShort(d)} ${dayNumber(d)} ${monthShort(d)}`}
             style={{ width: 56, paddingVertical: 8, alignItems: 'center', borderRadius: radius.md, borderWidth: 1, borderColor: active ? colors.ink : colors.border, backgroundColor: active ? colors.ink : colors.surface }}>
             <Text style={{ fontSize: 11, fontWeight: '600', color: active ? '#B9CCC6' : colors.muted, textTransform: 'uppercase' }}>{d === today ? 'Today' : weekdayShort(d)}</Text>
             <Text style={{ fontSize: 19, fontWeight: '800', color: active ? '#fff' : colors.ink }}>{dayNumber(d)}</Text>

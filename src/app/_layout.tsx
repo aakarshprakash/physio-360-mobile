@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { ApiError } from '@/lib/api';
 import { AuthProvider, useAuth } from '@/lib/auth';
@@ -31,7 +30,6 @@ function RootNavigator() {
 
   return (
     <BiometricGate active={signedIn}>
-      <StatusBar style="dark" />
       <Stack
         screenOptions={{
           headerStyle: { backgroundColor: colors.bg },

@@ -5,7 +5,7 @@ import { ClockCard } from '@/components/ClockCard';
 import { Avatar, Badge, Button, Card, Divider, ListItem, Row, Screen, SectionTitle, T } from '@/components/ui';
 import { api } from '@/lib/api';
 import { useSession } from '@/lib/auth';
-import { dateLabel, ROLE_LABELS } from '@/lib/format';
+import { dateLabel, label, ROLE_LABELS } from '@/lib/format';
 import { LEAVE_TONES, presenceLabel } from '@/lib/hr';
 import { colors } from '@/lib/theme';
 import type { LeaveBalance, LeaveRequest, Presence, StaffMember } from '@/lib/types';
@@ -62,7 +62,7 @@ export default function MyWorkScreen() {
               <ListItem
                 title={`${l.leave_type?.name ?? 'Leave'} · ${Number(l.days)} day${Number(l.days) === 1 ? '' : 's'}`}
                 subtitle={l.start_date === l.end_date ? dateLabel(l.start_date) : `${dateLabel(l.start_date)} – ${dateLabel(l.end_date)}`}
-                right={<Badge label={l.status} tone={LEAVE_TONES[l.status]} />}
+                right={<Badge label={label(l.status)} tone={LEAVE_TONES[l.status]} />}
               />
             </View>
           ))

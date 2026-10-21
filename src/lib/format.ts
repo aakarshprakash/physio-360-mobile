@@ -100,6 +100,13 @@ export function initials(name: string): string {
   return name.replace(/^(Dr\.?|Mr\.?|Mrs\.?|Ms\.?)\s+/i, '').split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase();
 }
 
+/** "partially_paid" → "Partially paid", "male" → "Male". */
+export function label(value: string | null | undefined): string {
+  if (!value) return '';
+  const s = value.replace(/_/g, ' ');
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 export const ROLE_LABELS: Record<string, string> = {
   owner: 'Clinic owner', admin: 'Administrator', therapist: 'Physiotherapist', receptionist: 'Front desk', accountant: 'Accountant',
 };

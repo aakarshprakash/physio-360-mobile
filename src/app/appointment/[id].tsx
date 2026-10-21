@@ -66,9 +66,9 @@ export default function AppointmentScreen() {
     <Screen>
       <Card style={{ gap: 12 }}>
         <Row style={{ justifyContent: 'space-between' }}>
-          <View>
+          <View style={{ flex: 1 }}>
             <T kind="small">{dayLabel(a.local_start, true)}</T>
-            <T kind="title">{time12(a.local_start)} – {time12(a.local_end)}</T>
+            <T kind="title" style={{ fontSize: 22 }}>{time12(a.local_start)} – {time12(a.local_end)}</T>
           </View>
           <StatusBadge status={a.status} />
         </Row>

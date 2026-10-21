@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, RefreshControl, View } from 'react-native';
 import { Avatar, Card, Divider, Empty, Input, ListItem, T } from '@/components/ui';
 import { api } from '@/lib/api';
+import { label } from '@/lib/format';
 import { useSession } from '@/lib/auth';
 import { colors, shadow } from '@/lib/theme';
 import type { PatientSummary } from '@/lib/types';
@@ -53,7 +54,7 @@ export default function PatientsScreen() {
         renderItem={({ item }) => (
           <ListItem
             title={item.full_name}
-            subtitle={[item.mrn, item.age ? `${item.age} yrs` : null, item.gender, item.phone].filter(Boolean).join(' · ')}
+            subtitle={[item.mrn, item.age ? `${item.age} yrs` : null, label(item.gender), item.phone].filter(Boolean).join(' · ')}
             left={<Avatar name={item.full_name} size={44} color="#3E8E76" />}
             onPress={() => router.push(`/patient/${item.id}`)}
           />

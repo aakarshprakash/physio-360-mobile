@@ -8,7 +8,7 @@ import { Avatar, Badge, Banner, Button, Card, Chips, Divider, Empty, IconButton,
 import { api, errorText } from '@/lib/api';
 import { useSession } from '@/lib/auth';
 import { openRemoteFile, uploadFile } from '@/lib/files';
-import { addDays, dateLabel, instant, money, todayIn } from '@/lib/format';
+import { addDays, dateLabel, instant, label, money, todayIn } from '@/lib/format';
 import { chooseSource, pickFile } from '@/lib/pick';
 import { colors } from '@/lib/theme';
 import type { Appointment, DocumentFile, Invoice, Patient } from '@/lib/types';
@@ -83,7 +83,7 @@ export default function PatientScreen() {
 
   return (
     <Screen refreshing={patient.isRefetching} onRefresh={() => void queryClient.invalidateQueries({ queryKey: ['patient', id] })}>
-      <Stack.Screen options={{ title: p.full_name }} />
+      <Stack.Screen options={{ title: 'Patient' }} />
       <Card style={{ gap: 14 }}>
         <Row gap={14}>
           <Pressable onPress={() => s.can('patients.manage') && chooseSource('Patient photo', false, (src) => photo.mutate(src as 'camera' | 'library'))} accessibilityLabel="Change patient photo" accessibilityRole="button">
@@ -96,8 +96,8 @@ export default function PatientScreen() {
           </Pressable>
           <View style={{ flex: 1, gap: 4 }}>
             <T kind="heading">{p.full_name}</T>
-            <T kind="small">{[p.mrn, p.age ? `${p.age} yrs` : null, p.gender].filter(Boolean).join(' · ')}</T>
-            <Badge label={p.status ?? 'active'} tone={p.status === 'active' ? 'success' : 'neutral'} />
+            <T kind="small">{[p.mrn, p.age ? `${p.age} yrs` : null, label(p.gender)].filter(Boolean).join(' · ')}</T>
+            <Badge label={label(p.status ?? 'active')} tone={(p.status ?? 'active') === 'active' ? 'success' : 'neutral'} />
           </View>
         </Row>
         <Row>
@@ -203,7 +203,7 @@ export default function PatientScreen() {
               <ListItem
                 title={`${inv.number ?? 'Draft'} · ${money(inv.total_minor, s.tenant.currency)}`}
                 subtitle={`${dateLabel(inv.issue_date)}${inv.balance_minor > 0 ? ` · Due ${money(inv.balance_minor, s.tenant.currency)}` : ''}`}
-                right={<Badge label={inv.payment_status ? inv.payment_status.replace('_', ' ') : inv.status} tone={inv.payment_status === 'paid' ? 'success' : inv.status === 'draft' ? 'neutral' : 'warning'} />}
+                right={<Badge label={label(inv.payment_status ?? inv.status)} tone={inv.payment_status === 'paid' ? 'success' : inv.status === 'draft' ? 'neutral' : 'warning'} />}
                 onPress={() => router.push(`/billing/${inv.id}`)}
               />
             </View>

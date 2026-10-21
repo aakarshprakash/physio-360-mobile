@@ -77,7 +77,7 @@ export default function NewAppointmentScreen() {
           </Card>
         ) : (
           <View style={{ gap: 6 }}>
-            <Input value={q} onChangeText={setQ} placeholder="Search by name, phone or MRN" autoFocus autoCorrect={false} />
+            <Input value={q} onChangeText={setQ} placeholder="Search by name, phone or MRN" autoCorrect={false} />
             {results.isFetching && <ActivityIndicator color={colors.primary} />}
             {(results.data ?? []).map((p) => (
               <Card key={p.id} style={{ paddingVertical: 0 }}>

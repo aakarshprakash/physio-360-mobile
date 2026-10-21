@@ -56,42 +56,43 @@ export function ClockCard() {
   const working = data.check_in && !data.check_out;
 
   return (
-    <Card style={{ gap: 14, backgroundColor: colors.ink, borderColor: colors.ink }}>
+    <Card style={{ gap: 14 }}>
       <Row style={{ justifyContent: 'space-between' }}>
-        <Row>
-          <View style={{ width: 40, height: 40, borderRadius: 12, backgroundColor: 'rgba(255,255,255,0.12)', alignItems: 'center', justifyContent: 'center' }}>
-            <Ionicons name={working ? 'timer' : 'finger-print'} size={22} color={colors.mint} />
+        <Row style={{ flex: 1 }}>
+          <View style={{ width: 44, height: 44, borderRadius: 14, backgroundColor: working ? colors.successSoft : colors.primarySoft, alignItems: 'center', justifyContent: 'center' }}>
+            <Ionicons name={working ? 'timer' : 'finger-print'} size={24} color={working ? colors.success : colors.primary} />
           </View>
-          <View>
-            <T kind="small" style={{ color: '#B9CCC6' }}>My day</T>
-            <T kind="subheading" style={{ color: '#fff' }}>
+          <View style={{ flex: 1 }}>
+            <T kind="small">My day</T>
+            <T kind="subheading">
               {data.check_in ? `In at ${time12(data.check_in)}` : onLeave ?? 'Not clocked in yet'}
               {data.check_out ? ` · Out ${time12(data.check_out)}` : ''}
             </T>
           </View>
         </Row>
         {data.is_late && <Badge label="Late" tone="warning" />}
+        {working && !data.is_late && <Badge label="Working" tone="success" />}
       </Row>
 
-      {data.minutes_worked != null && <T kind="small" style={{ color: '#B9CCC6' }}>Worked {hoursMinutes(data.minutes_worked)}</T>}
+      {data.minutes_worked != null && <T kind="small">Worked {hoursMinutes(data.minutes_worked)}</T>}
 
       {data.geofence.required && (
         <Row>
-          <Ionicons name="location" size={14} color={colors.mint} />
-          <T kind="small" style={{ color: '#B9CCC6', flex: 1 }}>
+          <Ionicons name="location" size={14} color={colors.primary} />
+          <T kind="small" style={{ flex: 1 }}>
             {nearest
               ? `${humanDistance(nearest.d)} from ${nearest.s.name} · allowed within ${nearest.s.radius_m} m`
-              : 'Clock-in uses your location (must be at your branch).'}
+              : 'Clock-in uses your location (you must be at your branch).'}
           </T>
         </Row>
       )}
 
       {data.can_check_in ? (
-        <Button title="Clock in" icon="log-in-outline" loading={punch.isPending} onPress={() => punch.mutate('in')} style={{ backgroundColor: colors.mint, borderColor: colors.mint }} />
+        <Button title="Clock in" icon="log-in-outline" loading={punch.isPending} onPress={() => punch.mutate('in')} />
       ) : data.can_check_out ? (
         <Button title="Clock out" icon="log-out-outline" variant="outline" loading={punch.isPending} onPress={() => punch.mutate('out')} />
       ) : (
-        <Row><Ionicons name="checkmark-circle" size={18} color={colors.mint} /><T kind="small" style={{ color: '#B9CCC6' }}>Day complete. See you tomorrow!</T></Row>
+        <Row><Ionicons name="checkmark-circle" size={18} color={colors.success} /><T kind="small">Day complete. See you tomorrow!</T></Row>
       )}
     </Card>
   );

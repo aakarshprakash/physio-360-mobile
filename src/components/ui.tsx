@@ -212,14 +212,16 @@ export function Avatar({ name, color = colors.primary, size = 44, uri }: { name:
 export function Stat({ label, value, icon, tone = 'primary', hint, onPress }: { label: string; value: string | number; icon: IconName; tone?: Tone; hint?: string; onPress?: () => void }) {
   const t = tones[tone];
   return (
-    <Card style={{ flex: 1, minWidth: 150, gap: 10 }} onPress={onPress}>
-      <View style={{ width: 38, height: 38, borderRadius: 12, backgroundColor: t.bg, alignItems: 'center', justifyContent: 'center' }}>
-        <Ionicons name={icon} size={20} color={t.fg} />
-      </View>
-      <View>
-        <T kind="small">{label}</T>
-        <T kind="title" style={{ fontSize: 22 }}>{value}</T>
-        {hint ? <T kind="small" style={{ fontSize: 12 }}>{hint}</T> : null}
+    <Card style={{ flex: 1, minWidth: 150, padding: 14 }} onPress={onPress}>
+      <View style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 10 }}>
+        <View style={{ width: 34, height: 34, borderRadius: 10, backgroundColor: t.bg, alignItems: 'center', justifyContent: 'center' }}>
+          <Ionicons name={icon} size={18} color={t.fg} />
+        </View>
+        <View style={{ flex: 1 }}>
+          <T kind="small" numberOfLines={2} style={{ fontSize: 12.5 }}>{label}</T>
+          <T kind="title" style={{ fontSize: 21, marginTop: 1 }} numberOfLines={1}>{value}</T>
+          {hint ? <T kind="small" style={{ fontSize: 11.5 }} numberOfLines={1}>{hint}</T> : null}
+        </View>
       </View>
     </Card>
   );

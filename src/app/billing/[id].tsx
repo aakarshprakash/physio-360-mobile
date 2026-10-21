@@ -6,7 +6,7 @@ import { Badge, Banner, Button, Card, Chips, Divider, Field, InfoRow, Input, Loa
 import { api, errorText } from '@/lib/api';
 import { useSession } from '@/lib/auth';
 import { openRemoteFile } from '@/lib/files';
-import { dateLabel, instant, money } from '@/lib/format';
+import { dateLabel, instant, label, money } from '@/lib/format';
 
 const METHODS = [
   { value: 'upi', label: 'UPI' },
@@ -68,7 +68,7 @@ export default function InvoiceScreen() {
             <T kind="title">{money(inv.total_minor, cur)}</T>
             <T kind="small">Issued {dateLabel(inv.issue_date)}{inv.due_date ? ` · Due ${dateLabel(inv.due_date)}` : ''}</T>
           </View>
-          <Badge label={inv.status === 'draft' ? 'Draft' : (inv.payment_status ?? inv.status).replace('_', ' ')} tone={inv.payment_status === 'paid' ? 'success' : inv.status === 'draft' ? 'neutral' : 'warning'} />
+          <Badge label={inv.status === 'draft' ? 'Draft' : label(inv.payment_status ?? inv.status)} tone={inv.payment_status === 'paid' ? 'success' : inv.status === 'draft' ? 'neutral' : 'warning'} />
         </Row>
         {inv.balance_minor > 0 && inv.status === 'posted' && <Banner tone="warning" body={`Balance due ${money(inv.balance_minor, cur)}`} icon="wallet-outline" />}
       </Card>
