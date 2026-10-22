@@ -87,7 +87,7 @@
             "./plugins/withShortCmakeObjectPaths"
         ],
         "extra": {
-            "apiUrl": "http://localhost:8000"
+            "apiUrl": "https://api.physio.peoplenex.online"
         },
         "experiments": {
             "typedRoutes": true,

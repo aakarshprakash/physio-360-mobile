@@ -39,7 +39,7 @@ npx expo start            # scan the QR code with Expo Go, or press a / i / w
   your computer's LAN address and start Laravel on all interfaces:
   `php artisan serve --host=0.0.0.0 --port=8000`, then enter
   `http://192.168.x.x:8000`. The Android emulator reaches the host at
-  `http://10.0.2.2:8000`. The default comes from `app.json` → `extra.apiUrl`.
+  `http://10.0.2.2:8000`. The default comes from `app.json` → `extra.apiUrl` (production: `https://api.physio.peoplenex.online`); `EXPO_PUBLIC_API_URL` overrides it for local builds.
 * Demo logins (password `Physio@2026`): `sarah@physio360.test` (owner),
   `arjun@physio360.test` (physiotherapist), `reena@physio360.test` (front desk),
   `joseph@physio360.test` (accountant), `kiran@physio360.test` (admin).
@@ -55,7 +55,7 @@ Tools already installed: JDK 17 in `D:\tools\jdk17`, Android SDK in `D:\tools\an
 
 ```bash
 export JAVA_HOME=/d/tools/jdk17 ANDROID_HOME=D:/tools/android-sdk NODE_ENV=production
-export EXPO_PUBLIC_API_URL=http://192.168.1.19:8000     # default server baked in; use https:// in production
+export EXPO_PUBLIC_API_URL=https://api.physio.peoplenex.online   # omit to use app.json; use http://<LAN-IP>:8000 for a local-server test build
 npx expo prebuild --platform android --clean             # only after app.json / plugin changes, then:
 echo "sdk.dir=D:/tools/android-sdk" > android/local.properties
 #   android/gradle/wrapper/gradle-wrapper.properties -> distributionUrl=file\:///D:/tools/gradle-9.4.1-bin.zip
